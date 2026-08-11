@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>STONKLY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f0c;
+    --panel:#121a14;
+    --panel-line:#1f2e22;
+    --green:#39ff6a;
+    --green-dim:#1f9e46;
+    --amber:#ffb000;
+    --red:#ff4c4c;
+    --ink:#e8ece9;
+    --ink-dim:#8fa596;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Space Mono', monospace;
+    font-size:15px;
+    line-height:1.6;
+  }
+  .pixel{ font-family:'Press Start 2P', monospace; letter-spacing:0.5px; image-rendering:pixelated; }
+  img{ image-rendering:pixelated; }
+
+  a{ color:inherit; }
+  ::selection{ background:var(--green); color:#04150a; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+    background:rgba(11,15,12,0.9);
+    backdrop-filter:blur(4px);
+    border-bottom:1px solid var(--panel-line);
+  }
+  .logo{
+    font-size:16px; color:var(--green);
+    text-shadow:0 0 8px rgba(57,255,106,0.5);
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo .caret{ animation:blink 1s steps(1) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .nav-links{ display:flex; gap:28px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; color:var(--ink-dim); font-size:12px;
+    text-transform:uppercase; letter-spacing:1px;
+    padding-bottom:3px; border-bottom:1px solid transparent;
+    transition:color .15s, border-color .15s;
+  }
+  .nav-links a:hover{ color:var(--green); border-color:var(--green); }
+  .navburger{ display:none; }
+
+  /* ---------- TICKER ---------- */
+  .ticker-wrap{
+    border-bottom:1px solid var(--panel-line);
+    background:#0e130f;
+    overflow:hidden;
+    white-space:nowrap;
+    padding:8px 0;
+  }
+  .ticker{
+    display:inline-block;
+    padding-left:100%;
+    animation:scroll-left 26s linear infinite;
+    font-size:12px;
+  }
+  .ticker span{ margin-right:40px; }
+  .up{ color:var(--green); }
+  .down{ color:var(--red); }
+  @keyframes scroll-left{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1160px; margin:0 auto;
+    padding:70px 28px 60px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;
+    align-items:center;
+  }
+  .eyebrow{
+    color:var(--amber); font-size:11px; letter-spacing:2px;
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{ content:"●"; color:var(--green); animation:blink 1.4s steps(1) infinite; }
+  h1.pixel{
+    font-size:clamp(28px,4.6vw,48px);
+    line-height:1.35;
+    margin:0 0 20px;
+    color:var(--ink);
+  }
+  h1.pixel .accent{ color:var(--green); text-shadow:0 0 10px rgba(57,255,106,.45); }
+  .hero p{ color:var(--ink-dim); max-width:46ch; margin-bottom:30px; }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  .btn{
+    font-family:'Press Start 2P', monospace;
+    font-size:11px;
+    padding:14px 20px;
+    border:2px solid var(--green);
+    background:var(--green);
+    color:#04150a;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+    box-shadow:4px 4px 0 var(--green-dim);
+    transition:transform .1s, box-shadow .1s;
+  }
+  .btn:hover{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--green-dim); }
+  .btn.ghost{
+    background:transparent; color:var(--green);
+    box-shadow:4px 4px 0 var(--panel-line);
+  }
+  .btn.ghost:hover{ box-shadow:2px 2px 0 var(--panel-line); }
+
+  .hero-art{
+    position:relative;
+    border:1px solid var(--panel-line);
+    background:var(--panel);
+    padding:22px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-art::before{
+    content:"LIVE";
+    position:absolute; top:10px; left:10px;
+    font-family:'Press Start 2P';
+    font-size:9px; color:var(--red);
+    animation:blink 1.2s steps(1) infinite;
+  }
+  .hero-art img{ width:100%; max-width:280px; }
+
+  /* ---------- SECTIONS ---------- */
+  section{ max-width:1160px; margin:0 auto; padding:70px 28px; }
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
+  .section-head .num{ color:var(--amber); font-size:12px; }
+  .section-head h2.pixel{ font-size:18px; margin:0; }
+  .section-head .rule{ flex:1; height:1px; background:var(--panel-line); }
+
+  /* Gallery */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:2px;
+    border:1px solid var(--panel-line);
+    background:var(--panel-line);
+  }
+  .gallery figure{
+    margin:0; background:var(--panel);
+    padding:14px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    position:relative;
+  }
+  .gallery figure img{ width:100%; max-width:120px; }
+  .gallery figcaption{ font-size:10px; color:var(--ink-dim); }
+  .gallery figure .id{
+    position:absolute; top:8px; right:10px;
+    font-size:9px; color:var(--green-dim);
+  }
+
+  /* Quest / checklist */
+  .quest-panel{
+    border:1px solid var(--panel-line);
+    background:var(--panel);
+  }
+  .quest-item{
+    display:flex; align-items:center; gap:16px;
+    padding:18px 22px;
+    border-bottom:1px solid var(--panel-line);
+  }
+  .quest-item:last-child{ border-bottom:none; }
+  .quest-item .box{
+    width:18px; height:18px; border:2px solid var(--green);
+    flex:none;
+  }
+  .quest-item .label{ flex:1; }
+  .quest-item .label b{ color:var(--ink); display:block; margin-bottom:2px; }
+  .quest-item .label span{ color:var(--ink-dim); font-size:12px; }
+  .quest-item .go{
+    font-size:11px; color:var(--amber); text-decoration:none;
+    border:1px solid var(--amber); padding:8px 14px; white-space:nowrap;
+  }
+  .quest-item .go:hover{ background:var(--amber); color:#1a1200; }
+
+  .checker-form{
+    border:1px solid var(--panel-line);
+    background:var(--panel);
+    padding:32px;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .checker-form label{ font-size:11px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:1px; }
+  .checker-form input{
+    background:#0b0f0c;
+    border:1px solid var(--panel-line);
+    color:var(--ink);
+    font-family:'Space Mono', monospace;
+    font-size:14px;
+    padding:14px;
+  }
+  .checker-form input:focus{ border-color:var(--green); }
+  .checker-form .hint{ font-size:11px; color:var(--ink-dim); }
+
+  footer{
+    border-top:1px solid var(--panel-line);
+    padding:30px 28px;
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:11px;
+  }
+  footer a{ color:var(--green); text-decoration:none; }
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(4,7,5,0.85);
+    display:none; align-items:center; justify-content:center;
+    z-index:100; padding:20px;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal{
+    background:var(--panel); border:1px solid var(--green);
+    max-width:340px; width:100%; padding:28px; text-align:center;
+    box-shadow:0 0 30px rgba(57,255,106,0.15);
+  }
+  .modal img{ width:140px; margin:0 auto 18px; display:block; }
+  .modal h3.pixel{ font-size:13px; margin:0 0 12px; color:var(--green); }
+  .modal p{ color:var(--ink-dim); font-size:13px; margin-bottom:22px; }
+  .modal .btn{ width:100%; }
+
+  @media (max-width:860px){
+    .hero{ grid-template-columns:1fr; padding-top:40px; }
+    .gallery{ grid-template-columns:repeat(2,1fr); }
+    .nav-links{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo pixel">STONKLY<span class="caret">_</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#apply">Apply</a></li>
+    <li><a href="#checker">Checker</a></li>
+  </ul>
+</nav>
+
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker">
+    <span class="up">$STONK +42.0%</span>
+    <span class="down">$RUG -6.9%</span>
+    <span class="up">$MOON +128%</span>
+    <span class="ink">WHITELIST SLOTS FILLING</span>
+    <span class="up">$STONK +42.0%</span>
+    <span class="down">$RUG -6.9%</span>
+    <span class="up">$MOON +128%</span>
+    <span class="ink">WHITELIST SLOTS FILLING</span>
+    <span class="up">$STONK +42.0%</span>
+    <span class="down">$RUG -6.9%</span>
+  </div>
+</div>
+
+<main id="home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">MARKET OPEN — MINT LIVE</div>
+      <h1 class="pixel">Buy the dip.<br>Hold the <span class="accent">bag</span>.<br>Become a <span class="accent">STONKLY</span>.</h1>
+      <p>10,000 pixel traders grinding the charts. No fundamentals, just vibes and a green candle. Complete the quest below to lock in your spot.</p>
+      <div class="cta-row">
+        <a class="btn" href="#apply">APPLY NOW</a>
+        <a class="btn ghost" href="#checker">CHECK STATUS</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="assets/1.gif" alt="Pixel-art trader in a suit holding papers and waving, the Stonkly mascot" />
+    </div>
+  </div>
+
+  <section id="apply">
+    <div class="section-head">
+      <span class="num pixel">01</span>
+      <h2 class="pixel">APPLY</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="quest-panel">
+      <div class="quest-item">
+        <div class="box"></div>
+        <div class="label"><b>Follow on X</b><span>Follow the official Stonkly account</span></div>
+        <a class="go" href="https://x.com/stonklymarket" target="_blank" rel="noopener">FOLLOW</a>
+      </div>
+      <div class="quest-item">
+        <div class="box"></div>
+        <div class="label"><b>Tag 3 friends</b><span>Tag 3 friends in the pinned post</span></div>
+        <a class="go" href="https://x.com/stonklymarket/status/2087092360148660634?s=46" target="_blank" rel="noopener">OPEN POST</a>
+      </div>
+      <div class="quest-item">
+        <div class="box"></div>
+        <div class="label"><b>Like &amp; Retweet</b><span>Like and RT the pinned post</span></div>
+        <a class="go" href="https://x.com/stonklymarket/status/2087092360148660634?s=46" target="_blank" rel="noopener">GO</a>
+      </div>
+      <div class="quest-item">
+        <div class="box"></div>
+        <div class="label"><b>Quote tweet</b><span>QT with "I'm locked in with Stonkly"</span></div>
+        <a class="go" href="https://x.com/stonklymarket/status/2087092360148660634?s=46" target="_blank" rel="noopener">QT</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="checker">
+    <div class="section-head">
+      <span class="num pixel">02</span>
+      <h2 class="pixel">CHECKER</h2>
+      <div class="rule"></div>
+    </div>
+    <form class="checker-form" id="checkerForm">
+      <div>
+        <label for="handle">X Username</label><br>
+        <input type="text" id="handle" placeholder="@yourhandle" required />
+      </div>
+      <div>
+        <label for="wallet">ETH Wallet</label><br>
+        <input type="text" id="wallet" placeholder="0x..." required />
+      </div>
+      <p class="hint">Submitting confirms all quest steps above are complete.</p>
+      <button type="submit" class="btn">SUBMIT</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  STONKLY — pixel traders, real gains (allegedly).
+  <a href="https://x.com/stonklymarket/status/2087092360148660634?s=46" target="_blank" rel="noopener">@stonklymarket on X</a>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <img src="assets/1.gif" alt="Stonkly mascot waving" />
+    <h3 class="pixel">YOU'RE IN LINE</h3>
+    <p>Your entry is logged. Keep an eye on X for whitelist results.</p>
+    <button class="btn" id="modalClose">OK</button>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('checkerForm');
+  const overlay = document.getElementById('modalOverlay');
+  const closeBtn = document.getElementById('modalClose');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    overlay.classList.add('open');
+  });
+  closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+</script>
+
+</body>
+</html>
