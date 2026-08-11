@@ -36,7 +36,6 @@
   a{ color:inherit; }
   ::selection{ background:var(--green); color:#04150a; }
 
-  /* focus visibility */
   a:focus-visible, button:focus-visible, input:focus-visible{
     outline:2px solid var(--amber);
     outline-offset:2px;
@@ -71,28 +70,6 @@
   }
   .nav-links a:hover{ color:var(--green); border-color:var(--green); }
   .navburger{ display:none; }
-
-  /* ---------- TICKER ---------- */
-  .ticker-wrap{
-    border-bottom:1px solid var(--panel-line);
-    background:#0e130f;
-    overflow:hidden;
-    white-space:nowrap;
-    padding:8px 0;
-  }
-  .ticker{
-    display:inline-block;
-    padding-left:100%;
-    animation:scroll-left 26s linear infinite;
-    font-size:12px;
-  }
-  .ticker span{ margin-right:40px; }
-  .up{ color:var(--green); }
-  .down{ color:var(--red); }
-  @keyframes scroll-left{
-    0%{ transform:translateX(0); }
-    100%{ transform:translateX(-100%); }
-  }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -158,27 +135,6 @@
   .section-head .num{ color:var(--amber); font-size:12px; }
   .section-head h2.pixel{ font-size:18px; margin:0; }
   .section-head .rule{ flex:1; height:1px; background:var(--panel-line); }
-
-  /* Gallery */
-  .gallery{
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    gap:2px;
-    border:1px solid var(--panel-line);
-    background:var(--panel-line);
-  }
-  .gallery figure{
-    margin:0; background:var(--panel);
-    padding:14px;
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    position:relative;
-  }
-  .gallery figure img{ width:100%; max-width:120px; }
-  .gallery figcaption{ font-size:10px; color:var(--ink-dim); }
-  .gallery figure .id{
-    position:absolute; top:8px; right:10px;
-    font-size:9px; color:var(--green-dim);
-  }
 
   /* Quest / checklist */
   .quest-panel{
@@ -250,7 +206,6 @@
 
   @media (max-width:860px){
     .hero{ grid-template-columns:1fr; padding-top:40px; }
-    .gallery{ grid-template-columns:repeat(2,1fr); }
     .nav-links{ display:none; }
   }
 </style>
@@ -266,21 +221,6 @@
   </ul>
 </nav>
 
-<div class="ticker-wrap" aria-hidden="true">
-  <div class="ticker">
-    <span class="up">$STONK +42.0%</span>
-    <span class="down">$RUG -6.9%</span>
-    <span class="up">$MOON +128%</span>
-    <span class="ink">WHITELIST SLOTS FILLING</span>
-    <span class="up">$STONK +42.0%</span>
-    <span class="down">$RUG -6.9%</span>
-    <span class="up">$MOON +128%</span>
-    <span class="ink">WHITELIST SLOTS FILLING</span>
-    <span class="up">$STONK +42.0%</span>
-    <span class="down">$RUG -6.9%</span>
-  </div>
-</div>
-
 <main id="home">
   <div class="hero">
     <div>
@@ -293,7 +233,7 @@
       </div>
     </div>
     <div class="hero-art">
-      <img src="assets/1.gif" alt="Pixel-art trader in a suit holding papers and waving, the Stonkly mascot" />
+      <img src="assets/1.png" alt="Pixel-art trader in a suit holding papers and waving, the Stonkly mascot" />
     </div>
   </div>
 
@@ -355,7 +295,7 @@
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <img src="assets/1.gif" alt="Stonkly mascot waving" />
+    <img src="assets/1.png" alt="Stonkly mascot waving" />
     <h3 class="pixel">YOU'RE IN LINE</h3>
     <p>Your entry is logged. Keep an eye on X for whitelist results.</p>
     <button class="btn" id="modalClose">OK</button>
